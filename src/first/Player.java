@@ -104,6 +104,15 @@ public class Player {
         }
     }
 
+    protected Player choiceVictin (Player hero1, Player hero2) {
+        int rollToDirect = rnd.nextInt(2);
+        if (rollToDirect == 0){
+            return hero1;
+        } else {
+            return hero2;
+        }
+    }
+
     public void show (){
         System.out.println(name + " jest z rasy: " + species + "\n def: " + def + ", hp: " + hp + ", power: " + power + ", ini: " + ini + ", exp: " + exp);
     }

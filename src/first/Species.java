@@ -1,9 +1,7 @@
 package first;
 
 public enum Species {
-    CZLOWIEK,
-    KRASNOLUD,
-    OGR
+    CZLOWIEK, KRASNOLUD, OGR
 }
 
 //1.zrobić ograniczenia do podawanych wartości przy tworzeniu podstaci.
