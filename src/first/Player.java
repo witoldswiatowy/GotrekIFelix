@@ -3,7 +3,7 @@ package first;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Player {
+public class Player implements Comparable<Player> {
 
     Scanner scanner = new Scanner(System.in);
     Random rnd = new Random();
@@ -17,6 +17,19 @@ public class Player {
     private int demage;
     private boolean lives;
     private int exp;
+    Skills[] skills;
+
+    protected Player(Species species, String name, int def, int hp, int power, int ini, boolean lives, int exp, Skills[] skills) {
+        this.species = species;
+        this.name = name;
+        this.def = def;
+        this.hp = hp;
+        this.power = power;
+        this.ini = ini;
+        this.lives = lives;
+        this.exp = exp;
+        this.skills = skills;
+    }
 
     protected Player(Species species, String name, int def, int hp, int power, int ini, boolean lives, int exp) {
         this.species = species;
@@ -30,8 +43,8 @@ public class Player {
     }
 
     protected Player createNewPlayer() {
-        int [] arrayOfStatistic = setStatistic();
-        Player player = new Player(setSpecies(), setName(), arrayOfStatistic[0], arrayOfStatistic[1], arrayOfStatistic[2], arrayOfStatistic[3], lives, 1);
+        int[] arrayOfStatistic = setStatistic();
+        Player player = new Player(setSpecies(), setName(), arrayOfStatistic[0], arrayOfStatistic[1], arrayOfStatistic[2], arrayOfStatistic[3], lives, 1, skills);
         return player;
     }
 
@@ -56,7 +69,12 @@ public class Player {
 
     private String setName() {
         System.out.println("Jak będzie się nazywać twoja postać?");
-        return scanner.nextLine();
+        String newName = scanner.nextLine();
+        return newName;
+    }
+
+    public String getName() {
+        return name;
     }
 
     private int[] setStatistic() {
@@ -64,13 +82,24 @@ public class Player {
         for (int i = 0; i < arrayOfStatistic.length; i++) {
             arrayOfStatistic[i] = rnd.nextInt(10) + 1;
         }
-        arrayOfStatistic[1] +=7;
-//        if (species.equals(Species.KRASNOLUD){
-//            arrayOfStatistic[0] +=
-//            arrayOfStatistic[1] +=
-//            arrayOfStatistic[2] +=
-//            arrayOfStatistic[3] +=
-//        }
+        if (species.equals(Species.KRASNOLUD)) {
+            arrayOfStatistic[0] += 6;
+            arrayOfStatistic[1] += 14;
+            arrayOfStatistic[2] += 5;
+            arrayOfStatistic[3] += 5;
+
+        } else if (species.equals(Species.CZLOWIEK)) {
+            arrayOfStatistic[0] += 4;
+            arrayOfStatistic[1] += 16;
+            arrayOfStatistic[2] += 5;
+            arrayOfStatistic[3] += 5;
+
+        } else if (species.equals(Species.OGR)) {
+            arrayOfStatistic[0] += 4;
+            arrayOfStatistic[1] += 15;
+            arrayOfStatistic[2] += 6;
+            arrayOfStatistic[3] += 5;
+        }
         return arrayOfStatistic;
     }
 
@@ -93,27 +122,35 @@ public class Player {
             } else {
                 System.out.println("Twój atak nie przebił się przez defensywe");
             }
-        }
-        if (target.hp <= 0) {
-            target.lives = false;
-            System.out.println();
-            System.out.println("śmierć!!!");
-            System.out.println(this.name + " zadał ostatni cios zabijając " + target.name + "a!");
-            System.out.println();
-            exp += (target.exp / 4) + 200;
+            if (target.hp <= 0) {
+                target.lives = false;
+                System.out.println();
+                System.out.println("śmierć!!!");
+                System.out.println(this.name + " zadał ostatni cios zabijając " + target.name + "a!");
+                System.out.println();
+                exp += (target.exp / 4) + 200;
+            }
+        } else {
+            System.out.println("Bohater " + this.name + " chciał zaatakować, ale przeciwnik nie żyje");
         }
     }
 
-    protected Player choiceVictin (Player hero1, Player hero2) {
-        int rollToDirect = rnd.nextInt(2);
-        if (rollToDirect == 0){
+    protected Player choiceVictin(Player hero1, Player hero2) {
+        if (hero1.isLives() && hero2.isLives()) {
+            int rollToDirect = rnd.nextInt(2);
+            if (rollToDirect == 0) {
+                return hero1;
+            } else {
+                return hero2;
+            }
+        } else if (!hero2.isLives()) {
             return hero1;
         } else {
             return hero2;
         }
     }
 
-    public void show (){
+    public void show() {
         System.out.println(name + " jest z rasy: " + species + "\n def: " + def + ", hp: " + hp + ", power: " + power + ", ini: " + ini + ", exp: " + exp);
     }
 
@@ -122,9 +159,24 @@ public class Player {
     }
 
     public int initiative() {
-        return ini + rnd.nextInt(10);
+        int roll = rnd.nextInt(10);
+        int initiativeValue = ini + roll;
+        System.out.println(this.name + " rzucił: " + roll + " i ma inicjatywy " + initiativeValue);
+        return initiativeValue;
     }
+
     public int getIni() {
         return ini;
+    }
+
+    @Override
+    public int compareTo(Player o) {
+        if (this.getIni() < o.getIni()) {
+            return -1;
+        }
+        if (this.getIni() > o.getIni()) {
+            return 1;
+        }
+        return 0;
     }
 }
