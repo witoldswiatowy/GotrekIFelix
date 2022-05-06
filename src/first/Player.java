@@ -1,5 +1,6 @@
 package first;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -17,9 +18,10 @@ public class Player implements Comparable<Player> {
     private int demage;
     private boolean lives;
     private int exp;
+    private final boolean isGood;
     Skills[] skills;
 
-    protected Player(Species species, String name, int def, int hp, int power, int ini, boolean lives, int exp, Skills[] skills) {
+    protected Player(Species species, String name, int def, int hp, int power, int ini, boolean lives, int exp, boolean isGood, Skills[] skills) {
         this.species = species;
         this.name = name;
         this.def = def;
@@ -28,10 +30,11 @@ public class Player implements Comparable<Player> {
         this.ini = ini;
         this.lives = lives;
         this.exp = exp;
+        this.isGood = isGood;
         this.skills = skills;
     }
 
-    protected Player(Species species, String name, int def, int hp, int power, int ini, boolean lives, int exp) {
+    protected Player(Species species, String name, int def, int hp, int power, int ini, boolean lives, int exp, boolean isGood) {
         this.species = species;
         this.name = name;
         this.def = def;
@@ -40,11 +43,12 @@ public class Player implements Comparable<Player> {
         this.ini = ini;
         this.lives = lives;
         this.exp = exp;
+        this.isGood = isGood;
     }
 
     protected Player createNewPlayer() {
         int[] arrayOfStatistic = setStatistic();
-        Player player = new Player(setSpecies(), setName(), arrayOfStatistic[0], arrayOfStatistic[1], arrayOfStatistic[2], arrayOfStatistic[3], lives, 1, skills);
+        Player player = new Player(setSpecies(), setName(), arrayOfStatistic[0], arrayOfStatistic[1], arrayOfStatistic[2], arrayOfStatistic[3], lives, 1, isGood, skills);
         return player;
     }
 
@@ -75,6 +79,13 @@ public class Player implements Comparable<Player> {
 
     public String getName() {
         return name;
+    }
+    public String getNameSpecial() {
+        return name;
+    }
+
+    public boolean isGood() {
+        return isGood;
     }
 
     private int[] setStatistic() {
@@ -135,7 +146,7 @@ public class Player implements Comparable<Player> {
         }
     }
 
-    protected Player choiceVictin(Player hero1, Player hero2) {
+    protected Player choiceVictim(Player hero1, Player hero2) {
         if (hero1.isLives() && hero2.isLives()) {
             int rollToDirect = rnd.nextInt(2);
             if (rollToDirect == 0) {
@@ -148,6 +159,11 @@ public class Player implements Comparable<Player> {
         } else {
             return hero2;
         }
+    }
+
+    protected Player choiceVictim(ArrayList<Player> listOfVictim) {
+        int numberOfVictim = rnd.nextInt(listOfVictim.size());
+        return listOfVictim.get(numberOfVictim);
     }
 
     public void show() {

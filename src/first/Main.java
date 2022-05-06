@@ -6,9 +6,11 @@ public class Main {
     public static void main(String[] args) {
 
 //        Skills [] skillsFelix = {Skills.dodge};
-        Player felix = new Player(Species.CZLOWIEK, "Felix", 2, 15, 5, 4, true, 1);
-        Player gotrek = new Player(Species.KRASNOLUD, "Gotrek", 5, 25, 7, 5, true, 1);
-        Player barr = new Player(Species.OGR, "Barr", 6, 30, 7, 2, true, 1);
+        Hero felix = new Hero(Species.CZLOWIEK, "Felix", 3, 15, 5, 4, true, 1, true);
+        Hero gotrek = new Hero(Species.KRASNOLUD, "Gotrek", 5, 25, 7, 5, true, 1, true);
+        Enemy barr = new Enemy(Species.OGR, "Barr", 6, 25, 17, 2, true, 1, false);
+        Enemy troll = new Enemy(Species.TROLL, "Troll", 8, 30, 17, 1, true, 1, false);
+        Enemy goblin = new Enemy(Species.GOBLIN, "Goblin", 2, 10, 10, 5, true, 1, false);
 
 //        Player[] players = new Player[10];
 //        players[0] = felix.createNewPlayer();
@@ -19,13 +21,11 @@ public class Main {
 //        barr.show();
 //        Program.fighting(gotrek, felix, barr);
 //        Program.fighting(gotrek, players[0], barr);
-        ArrayList <Player> playerArrayList = new ArrayList<>();
 
+/*        ArrayList <Player> playerArrayList = new ArrayList<>();
         playerArrayList.add(barr);
         playerArrayList.add(felix);
-        playerArrayList.add(gotrek);
-
-        Program.fighting1(gotrek,felix,barr); //felix zadał cios po śmierci
+        playerArrayList.add(gotrek);*/
 /*        for (Player p : playerArrayList){
             System.out.println(p.getName());
         }
@@ -33,6 +33,30 @@ public class Main {
         for (Player p : playerArrayList){
             System.out.println(p.getName());
         }*/
+//        Program.fighting(gotrek,felix,barr); //felix zadał cios po śmierci
+
+        ArrayList<Player> heroArrayList = new ArrayList<>();
+        heroArrayList.add(felix);
+        heroArrayList.add(gotrek);
+        Program.getFasterPlayer(heroArrayList);
+
+        ArrayList<Player> enemyArrayList = new ArrayList<>();
+        enemyArrayList.add(barr);
+        enemyArrayList.add(troll);
+        enemyArrayList.add(goblin);
+        Program.getFasterPlayer(enemyArrayList);
+
+        for (Player p : heroArrayList){
+            System.out.println(p.getName());
+        }
+        System.out.println();
+        for (Player p : enemyArrayList){
+            System.out.println(p.getName());
+        }
+        System.out.println();
+
+        Program.figthingHeroVSEnemy(heroArrayList,enemyArrayList);
+
 
     }
 }
