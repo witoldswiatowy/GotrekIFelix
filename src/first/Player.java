@@ -188,7 +188,7 @@ public class Player implements Comparable<Player> {
     public int getIni() {
         return ini;
     }
-    
+
 
     @Override
     public int compareTo(Player o) {

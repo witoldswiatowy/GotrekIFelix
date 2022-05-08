@@ -104,6 +104,7 @@ public class Program {
                 } else {
                     System.out.println("Złole wygrali");
                 }
+                //todo jakies błedy linijki niżej
                 //Jesli ginie drugi bohater to rzuca błąd IllegalArgumentException: bound must be positive i w 165 linijce Playera
                 //i może to być związane z kolejnością Troll, Barr, Felix, Gotrek, Goblin. Zgineli pokolei felix, goblin i gotrek (gotrek przez trolla)
                 // Zgineli pokolei gotrek, goblin i felix (felix przez trolla)
@@ -150,5 +151,6 @@ public class Program {
         System.out.println("koniec 2 ########");
         return playerAfterSortByInitiative;
     }
+
 
 }
