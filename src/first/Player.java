@@ -83,6 +83,7 @@ public class Player implements Comparable<Player> {
     public String getName() {
         return name;
     }
+
     public String getNameSpecial() {
         return name;
     }
@@ -121,7 +122,7 @@ public class Player implements Comparable<Player> {
         int roll = rnd.nextInt(10) + 1;
         if (roll == 10) {
             int furiaUlricha = rnd.nextInt(10 + 1);
-            demage = power + roll + furiaUlricha; //trzeba by jeszcze dodać pętle że przy następnych 10, kula się dalej i sumuje się wszystkie rzuty
+            demage = power + roll + furiaUlricha; //todo trzeba by jeszcze dodać pętle że przy następnych 10, kula się dalej i sumuje się wszystkie rzuty
         } else {
             demage = power + roll;
         }
