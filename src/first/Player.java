@@ -14,6 +14,7 @@ public class Player implements Comparable<Player> {
     private int def;
     private int hp;
     private int power;
+    private int orginalIni;
     private int ini;
     private int demage;
     private boolean lives;
@@ -21,12 +22,13 @@ public class Player implements Comparable<Player> {
     private final boolean isGood;
     Skills[] skills;
 
-    protected Player(Species species, String name, int def, int hp, int power, int ini, boolean lives, int exp, boolean isGood, Skills[] skills) {
+    protected Player(Species species, String name, int def, int hp, int power, int orginalIni, int ini, boolean lives, int exp, boolean isGood, Skills[] skills) {
         this.species = species;
         this.name = name;
         this.def = def;
         this.hp = hp;
         this.power = power;
+        this.orginalIni = orginalIni;
         this.ini = ini;
         this.lives = lives;
         this.exp = exp;
@@ -34,12 +36,13 @@ public class Player implements Comparable<Player> {
         this.skills = skills;
     }
 
-    protected Player(Species species, String name, int def, int hp, int power, int ini, boolean lives, int exp, boolean isGood) {
+    protected Player(Species species, String name, int def, int hp, int power, int orginalIni, int ini, boolean lives, int exp, boolean isGood) {
         this.species = species;
         this.name = name;
         this.def = def;
         this.hp = hp;
         this.power = power;
+        this.orginalIni = orginalIni;
         this.ini = ini;
         this.lives = lives;
         this.exp = exp;
@@ -48,7 +51,7 @@ public class Player implements Comparable<Player> {
 
     protected Player createNewPlayer() {
         int[] arrayOfStatistic = setStatistic();
-        Player player = new Player(setSpecies(), setName(), arrayOfStatistic[0], arrayOfStatistic[1], arrayOfStatistic[2], arrayOfStatistic[3], lives, 1, isGood, skills);
+        Player player = new Player(setSpecies(), setName(), arrayOfStatistic[0], arrayOfStatistic[1], arrayOfStatistic[2], arrayOfStatistic[3], arrayOfStatistic[3], lives, 1, isGood, skills);
         return player;
     }
 
@@ -94,10 +97,10 @@ public class Player implements Comparable<Player> {
             arrayOfStatistic[i] = rnd.nextInt(10) + 1;
         }
         if (species.equals(Species.KRASNOLUD)) {
-            arrayOfStatistic[0] += 6;
-            arrayOfStatistic[1] += 14;
-            arrayOfStatistic[2] += 5;
-            arrayOfStatistic[3] += 5;
+            arrayOfStatistic[0] += 6; //def
+            arrayOfStatistic[1] += 14; //hp
+            arrayOfStatistic[2] += 5; //power
+            arrayOfStatistic[3] += 5;//ini
 
         } else if (species.equals(Species.CZLOWIEK)) {
             arrayOfStatistic[0] += 4;
@@ -174,16 +177,17 @@ public class Player implements Comparable<Player> {
         return lives;
     }
 
-    public int initiative() {
+    public void initiative() {
         int roll = rnd.nextInt(10);
-        int initiativeValue = ini + roll;
+        int initiativeValue = orginalIni + roll;
         System.out.println(this.name + " rzucił: " + roll + " i ma inicjatywy " + initiativeValue);
-        return initiativeValue;
+        this.ini = initiativeValue;
     }
 
     public int getIni() {
         return ini;
     }
+    
 
     @Override
     public int compareTo(Player o) {
@@ -194,5 +198,9 @@ public class Player implements Comparable<Player> {
             return 1;
         }
         return 0;
+    }
+
+    public interface Comparable <T> {
+        public int compareTo(T o);
     }
 }

@@ -1,9 +1,14 @@
 package first;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Random;
 
 public class Program {
+    Random rnd = new Random();
+
+    int initiative;
 
     // Narazie na stałe dać kolejność, póżniej zrobić sortowanie po inicjatywie z rollem
     public static void fightingOldDoNotUse(Player hero1, Player hero2, Player enemy) {
@@ -67,6 +72,9 @@ public class Program {
         ArrayList<Player> listOfFighter = new ArrayList<>();
         listOfFighter.addAll(listOfHero);
         listOfFighter.addAll(listOfEnemy);
+        for (Player p : listOfFighter) {
+            p.initiative(); //na początku walki ustalamy rzuty na inicjatywe
+        }
         Program.getFasterPlayer(listOfFighter);
         while (listOfHero.size() != 0 || listOfEnemy.size() != 0) {
             for (int i = 0; i < listOfFighter.size(); i++) { //może się zdarzyć, że zostanie usunięty element przed wartością i, co sprawii że zostanie przeskoczona jedna postać
@@ -118,23 +126,29 @@ public class Program {
 //            System.out.println(p.getName());
 //        }
         System.out.println();
-        System.out.println("Kolejność wg. inicjatywy: ");
+        System.out.println("Kolejność wg. inicjatywy(1): ");
         for (Player p : listOfPlayer) {
             System.out.println(p.getName());
         }
-        System.out.println();
+        System.out.println("koniec 1 ########");
         return listOfPlayer;
     }
 
     public static ArrayList<Player> getFasterPlayer2(ArrayList<Player> listOfPlayer) {//to jest nie działa
+        System.out.println("Kolejność wg. inicjatywy(2): ");
         for (Player p : listOfPlayer) {
             System.out.println(p.getName());
         }
+        System.out.println("########## koniec listy kontrolnej ");
         ArrayList<Player> playerAfterSortByInitiative = listOfPlayer;
-        playerAfterSortByInitiative.sort(Player::compareTo);
+        Collections.sort(playerAfterSortByInitiative);
+        Collections.reverse(playerAfterSortByInitiative);
+        System.out.println("Sortowanie się zaczyna:");
         for (Player p : playerAfterSortByInitiative) {
             System.out.println(p.getName());
         }
+        System.out.println("koniec 2 ########");
         return playerAfterSortByInitiative;
     }
+
 }
