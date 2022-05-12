@@ -75,79 +75,58 @@ public class Program {
         for (Player p : listOfFighter) {
             p.initiative(); //na początku walki ustalamy rzuty na inicjatywe
         }
-        Program.getFasterPlayer(listOfFighter);
-        while (listOfHero.size() != 0 || listOfEnemy.size() != 0) {
-            for (int i = 0; i < listOfFighter.size(); i++) { //może się zdarzyć, że zostanie usunięty element przed wartością i, co sprawii że zostanie przeskoczona jedna postać
+        Program.getFasterPlayer2(listOfFighter);
+        while (listOfHero.size() != 0 && listOfEnemy.size() != 0) {
+            for (int i = 0; i < listOfFighter.size(); i++) { //todo może się zdarzyć, że zostanie usunięty element przed wartością i, co sprawii że zostanie przeskoczona jedna postać
                 if (listOfFighter.get(i).isGood()) {
                     if (listOfEnemy.size() != 0) {
                         Player victim = listOfFighter.get(i).choiceVictim(listOfEnemy);
-                        listOfFighter.get(i).attack(victim); //tu przesłonić metode choiceVictin w obu klasach lub przeciążyć w Playerze na Arrayliste
+                        listOfFighter.get(i).attack(victim); //todo tu przesłonić metode choiceVictin w obu klasach lub przeciążyć w Playerze na Arrayliste
                         if (!victim.isLives()) {
-                            System.out.println("-----------------Robie remove postaci: " + victim.getName() + " z listy listOfFigter w rundzie " + listOfFighter.get(i).getName());
                             listOfFighter.remove(victim);
-                            System.out.println("-----------------Robie remove postaci: " + victim.getName() + " z listy listOfEnemy w rundzie " + listOfFighter.get(i).getName());
                             listOfEnemy.remove(victim);
                         }
                     } else {
-                        System.out.println("Bohaterowie wygrali!!!");
-                    }
-                }
-                if (listOfHero.size() != 0) {
-                    Player victim = listOfFighter.get(i).choiceVictim(listOfHero);
-                    listOfFighter.get(i).attack(victim);
-                    if (!victim.isLives()) {
-                        System.out.println("-----------------Robie remove postaci: " + victim.getNameSpecial() + " z listy listOfFighter w rundzie " + listOfFighter.get(i).getName());
-                        listOfFighter.remove(victim); //tu wywala kiedy usuwany jest ostatni obiekt z listy, ale wyrzuca przy wyborze choiceVictim z pustego zbioru
-                        System.out.println("-----------------Robie remove postaci: " + victim.getNameSpecial() + " z listy listOfHero w rundzie " + listOfFighter.get(i).getName());
-                        listOfHero.remove(victim); //to trzeba sprawdzic czy działa
+                        System.out.println("Nikt nie został na polu bitwy prócz bohaterów");
                     }
                 } else {
-                    System.out.println("Złole wygrali");
+                    if (listOfHero.size() != 0) {
+                        Player victim = listOfFighter.get(i).choiceVictim(listOfHero);
+                        listOfFighter.get(i).attack(victim);
+                        if (!victim.isLives()) {
+                            listOfFighter.remove(victim);
+                            listOfHero.remove(victim);
+                        }
+                    } else {
+                        System.out.println("Złole nie mają już kogo zaatakować....");
+                    }
                 }
-                //Jesli ginie drugi bohater to rzuca błąd IllegalArgumentException: bound must be positive i w 165 linijce Playera
-                //i może to być związane z kolejnością Troll, Barr, Felix, Gotrek, Goblin. Zgineli pokolei felix, goblin i gotrek (gotrek przez trolla)
-                // Zgineli pokolei gotrek, goblin i felix (felix przez trolla)
-
-            }//Lub drugi błąd rzuca martwy drugi bohater, w 87 linicje program, IndexOutOfBoundsException: Index 3 out of bounds for length 3
-            //i może to być związane z kolejnością Troll, Barr, Felix, Gotrek, Goblin. Zgineli pokolei felix i gotrek (gotrek przez goblina)
+            }
+        }
+        if (listOfEnemy.isEmpty()) {
+            System.out.println("Bohaterowie wygrali");
+        } else {
+            System.out.println("Złole wygrali");
         }
     }
 
 
     public static ArrayList<Player> getFasterPlayer(ArrayList<Player> listOfPlayer) { //to wywołuje rzuty dwa razy
-//        for (Player p : listOfPlayer) {
-//            System.out.println(p.getName());
-//        }
-//        ArrayList<Player> playerAfterSortByInitiative = listOfPlayer;
-
-//        playerAfterSortByInitiative.sort(Comparator.comparing(Player::initiative));
         listOfPlayer.sort(Comparator.comparing(Player::getIni));
-//        for (Player p : playerAfterSortByInitiative) {
-//            System.out.println(p.getName());
-//        }
-        System.out.println();
-        System.out.println("Kolejność wg. inicjatywy(1): ");
         for (Player p : listOfPlayer) {
             System.out.println(p.getName());
         }
-        System.out.println("koniec 1 ########");
         return listOfPlayer;
     }
 
     public static ArrayList<Player> getFasterPlayer2(ArrayList<Player> listOfPlayer) {//to jest nie działa
-        System.out.println("Kolejność wg. inicjatywy(2): ");
-        for (Player p : listOfPlayer) {
-            System.out.println(p.getName());
-        }
-        System.out.println("########## koniec listy kontrolnej ");
         ArrayList<Player> playerAfterSortByInitiative = listOfPlayer;
         Collections.sort(playerAfterSortByInitiative);
         Collections.reverse(playerAfterSortByInitiative);
-        System.out.println("Sortowanie się zaczyna:");
+        System.out.println("Kolejność walki: ");
         for (Player p : playerAfterSortByInitiative) {
             System.out.println(p.getName());
         }
-        System.out.println("koniec 2 ########");
         return playerAfterSortByInitiative;
     }
 

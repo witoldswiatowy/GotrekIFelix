@@ -134,14 +134,12 @@ public class Player implements Comparable<Player> {
                 target.hp += target.def - this.demage;
                 System.out.println(target.name + " został zaatakowany za " + this.demage + " przez " + this.name + "a i ma " + target.hp + " życia.");
             } else {
-                System.out.println("Twój atak nie przebił się przez defensywe");
+                System.out.println("Atak " + this.name + " nie przebił się przez defensywe");
             }
             if (target.hp <= 0) {
                 target.lives = false;
-                System.out.println();
-                System.out.println("śmierć!!!");
-                System.out.println(this.name + " zadał ostatni cios zabijając " + target.name + "a!");
-                System.out.println();
+                System.out.println("\n śmierć!!!");
+                System.out.println(this.name + " zadał ostatni cios zabijając " + target.name + "a! \n");
                 exp += (target.exp / 4) + 200;
             }
         } else {
