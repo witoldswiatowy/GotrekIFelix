@@ -25,8 +25,10 @@ public class Main {
         enemyArrayList.add(troll);
         enemyArrayList.add(goblin);
 
+        Program.getFasterPlayer2(enemyArrayList).toString();
 
-        Program.figthingHeroVSEnemy(heroArrayList,enemyArrayList);
+
+//        Program.figthingHeroVSEnemy(heroArrayList,enemyArrayList);
 
 
     }

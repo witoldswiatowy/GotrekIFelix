@@ -189,13 +189,7 @@ public class Player implements Comparable<Player> {
 
     @Override
     public int compareTo(Player o) {
-        if (this.getIni() < o.getIni()) {
-            return -1;
-        }
-        if (this.getIni() > o.getIni()) {
-            return 1;
-        }
-        return 0;
+        return this.getIni() - o.getIni();
     }
 
     public interface Comparable <T> {
