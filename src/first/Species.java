@@ -1,7 +1,15 @@
 package first;
 
 public enum Species {
-    CZLOWIEK, KRASNOLUD, OGR, TROLL, GOBLIN
+    CZLOWIEK,
+    KRASNOLUD,
+    OGR,
+    TROLL,
+    GOBLIN;
+
+    //przeniesc logike z klasy player i setStatistic do paramtreow obiektow ENUMA
+
+
 }
 
 /*
